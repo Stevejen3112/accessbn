@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -Eeuo pipefail
 
-umask 077
+umask 022
 
 require_root() {
   if [[ "${EUID}" -ne 0 ]]; then
