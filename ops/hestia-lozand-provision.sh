@@ -48,7 +48,7 @@ install_hestia() {
     --interactive no \
     --hostname "${SERVER_HOSTNAME}" \
     --email "${SITE_EMAIL}" \
-    --username admin \
+    --username "${HESTIA_ADMIN_USER:-hadmin}" \
     --password "${HESTIA_ADMIN_PASSWORD}" \
     --apache yes \
     --phpfpm yes \
