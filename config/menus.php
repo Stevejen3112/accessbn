@@ -1,19 +1,21 @@
 <?php
 
-function moduleEnabledFromJson($module_key)
-{
-    $modules_json_path = base_path('public/assets/json/modules.json');
-    if (!file_exists($modules_json_path)) {
-        return false;
-    }
-    $modules = json_decode(file_get_contents($modules_json_path), true) ?? [];
-    $module = $modules[$module_key] ?? null;
+if (!function_exists('moduleEnabledFromJson')) {
+    function moduleEnabledFromJson($module_key)
+    {
+        $modules_json_path = base_path('public/assets/json/modules.json');
+        if (!file_exists($modules_json_path)) {
+            return false;
+        }
+        $modules = json_decode(file_get_contents($modules_json_path), true) ?? [];
+        $module = $modules[$module_key] ?? null;
 
-    if (!$module) {
-        return false;
-    }
+        if (!$module) {
+            return false;
+        }
 
-    return $module['status'] == 'enabled' ? true : false;
+        return $module['status'] == 'enabled' ? true : false;
+    }
 }
 
 
