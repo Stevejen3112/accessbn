@@ -49,6 +49,7 @@ install_hestia() {
     --hostname "${SERVER_HOSTNAME}" \
     --email "${SITE_EMAIL}" \
     --password "${HESTIA_ADMIN_PASSWORD}" \
+    --nginx yes \
     --apache yes \
     --phpfpm yes \
     --multiphp yes \
@@ -71,7 +72,10 @@ install_hestia() {
 
 install_runtime_tools() {
   apt-get update
-  apt-get install -y composer nodejs npm default-mysql-client
+  if ! command -v node >/dev/null 2>&1 || ! node -e 'process.exit(Number(process.versions.node.split(".")[0]) >= 22 ? 0 : 1)' >/dev/null 2>&1; then
+    curl -fsSL https://deb.nodesource.com/setup_22.x | bash -
+  fi
+  apt-get install -y composer nodejs default-mysql-client
 }
 
 ensure_hestia_site() {
