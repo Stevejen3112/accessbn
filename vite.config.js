@@ -15,6 +15,14 @@ function getTemplate() {
 }
 
 const template = getTemplate();
+const laragonKey = 'C:/laragon/etc/ssl/laragon.key';
+const laragonCert = 'C:/laragon/etc/ssl/laragon.crt';
+const https = fs.existsSync(laragonKey) && fs.existsSync(laragonCert)
+    ? {
+        key: fs.readFileSync(laragonKey),
+        cert: fs.readFileSync(laragonCert),
+    }
+    : undefined;
 
 export default defineConfig({
     plugins: [
@@ -34,10 +42,7 @@ export default defineConfig({
     server: {
         host: 'lozand.local',
         cors: true,
-        https: {
-            key: fs.readFileSync('C:/laragon/etc/ssl/laragon.key'),
-            cert: fs.readFileSync('C:/laragon/etc/ssl/laragon.crt'),
-        },
+        https,
         watch: {
             ignored: ['**/storage/framework/views/**'],
         },
