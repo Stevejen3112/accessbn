@@ -3,12 +3,14 @@
 use Illuminate\Contracts\Encryption\DecryptException;
 use Illuminate\Support\Facades\Crypt;
 
-function serviceSafeDcrypt($value)
-{
-    try {
-        return Crypt::decryptString($value);
-    } catch (DecryptException $e) {
-        return null;
+if (!function_exists('serviceSafeDcrypt')) {
+    function serviceSafeDcrypt($value)
+    {
+        try {
+            return Crypt::decryptString($value);
+        } catch (DecryptException $e) {
+            return null;
+        }
     }
 }
 
