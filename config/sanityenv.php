@@ -1,0 +1,33 @@
+<?php
+
+return [
+    'APP_ENV' => 'local',
+    'MAIL_USERNAME' => 'XXXX',
+    'MAIL_PASSWORD' => 'XXXX',
+    'MAIL_FROM_ADDRESS' => 'hello@example.com',
+    'NOCAPTCHA_SECRET' => 'xxxxxxxx',
+    'NOCAPTCHA_SITEKEY' => 'xxxxxxxxxxx',
+    'SOME_KEY' => 'key123',
+    'NOWPAYMENT_API_KEY' => 'xxxxxxxxxx',
+    'NOWPAYMENT_SECRET_KEY' => 'xxxxxxxxxx',
+    'NOWPAYMENT_EMAIL' => 'email@example.com',
+    'NOWPAYMENT_PASSWORD' => 'password',
+    'NOWPAYMENT_2FA_SECRET' => 'xxxxxxx',
+    'PRODUCT_KEY' => 'xxxxxxxx',
+    'BINSO_API_KEY' => 'xxxxxxx',
+    'GOOGLE_CLIENT_ID' => 'xxxxxxx',
+    'GOOGLE_CLIENT_SECRET' => 'xxxxxxxxx',
+    'USE_VITE' => false,
+    'PAYSTACK_PUBLIC_KEY' => 'xxxxxxx',
+    'PAYSTACK_SECRET_KEY' => 'xxxxxxx',
+    'PAYSTACK_MERCHANT_EMAIL' => 'email@example.com',
+    'RAZORPAY_KEY_ID' => 'xxxxxxx',
+    'RAZORPAY_KEY_SECRET' => 'xxxxxxx',
+    'RAZORPAYX_KEY_ID' => 'xxxxxxx',
+    'RAZORPAYX_KEY_SECRET' => 'xxxxxxx',
+    'RAZORPAYX_ACCOUNT_NUMBER' => 8494049049049,
+    'STRIPE_KEY' => 'xxxxxxx',
+    'STRIPE_SECRET' => 'xxxxxxx',
+    'STRIPE_WEBHOOK_SECRET' => 'xxxxxxx',
+
+];
