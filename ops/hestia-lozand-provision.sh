@@ -75,7 +75,7 @@ install_runtime_tools() {
   if ! command -v node >/dev/null 2>&1 || ! node -e 'process.exit(Number(process.versions.node.split(".")[0]) >= 22 ? 0 : 1)' >/dev/null 2>&1; then
     curl -fsSL https://deb.nodesource.com/setup_22.x | bash -
   fi
-  apt-get install -y composer nodejs default-mysql-client
+  apt-get install -y composer nodejs mariadb-client
 }
 
 ensure_hestia_site() {
@@ -144,7 +144,7 @@ ENV
 
 deploy_app() {
   local domain_root="/home/${HESTIA_USER}/web/${DOMAIN}"
-  local app_dir="${domain_root}/current"
+  local app_dir="${domain_root}/private/current"
   local public_link="${domain_root}/public_html"
   local full_db_name="${HESTIA_USER}_${DB_NAME}"
   local full_db_user="${HESTIA_USER}_${DB_USER}"
