@@ -49,7 +49,6 @@ install_hestia() {
     --hostname "${SERVER_HOSTNAME}" \
     --email "${SITE_EMAIL}" \
     --password "${HESTIA_ADMIN_PASSWORD}" \
-    --nginx yes \
     --apache yes \
     --phpfpm yes \
     --multiphp yes \
