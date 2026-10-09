@@ -2,6 +2,8 @@
 
 // Run against an existing installation; all read-status changes are rolled back.
 require dirname(__DIR__).'/vendor/autoload.php';
+require dirname(__DIR__).'/app/Http/Controllers/User/DashboardController.php';
+require dirname(__DIR__).'/app/Providers/AppServiceProvider.php';
 $app = require dirname(__DIR__).'/bootstrap/app.php';
 if (isset($argv[1])) {
     $app->useStoragePath($argv[1]);
@@ -29,9 +31,13 @@ try {
     $ids = [];
     do {
         $page = $controller->notifications($request)->getData(true);
-        $check(count($page['items']) <= 20, 'Page is bounded to 20 messages');
+        if (count($page['items']) > 20) {
+            throw new RuntimeException('Page exceeds 20 messages');
+        }
         foreach ($page['items'] as $item) {
-            $check(!isset($item['body']), 'List excludes message bodies');
+            if (isset($item['body'])) {
+                throw new RuntimeException('List includes message body');
+            }
             $ids[] = $item['id'];
         }
         $request->query->set('cursor', $page['next_cursor']);
