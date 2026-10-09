@@ -64,6 +64,8 @@ Route::prefix('user')->middleware(['auth', 'otp.verified', 'user.status', 'user.
     Route::post('/logout', [LoginController::class, 'logout'])->name('logout')->withoutMiddleware(['otp.verified', 'user.status', 'user.kyc']);
     //Dashboard
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/notifications', [DashboardController::class, 'notifications'])->name('notifications.index');
+    Route::get('/notifications/{id}', [DashboardController::class, 'notification'])->whereNumber('id')->name('notifications.show');
     Route::post('/notification-mark-as-read', [DashboardController::class, 'notificationMarkAsRead'])->name('notification-mark-as-read');
     Route::post('/onboarding', [DashboardController::class, 'onboarding'])->name('onboarding')->middleware('sandbox');
     // KYC

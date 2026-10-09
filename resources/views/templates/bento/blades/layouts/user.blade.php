@@ -293,13 +293,13 @@
                 </div>
 
                 <!-- Notifications -->
-                @if ($unread_notification_messages->count() > 0)
+                @if ($unread_notification_count > 0)
                     <div class="relative">
                         <button
                             class="notification-btn relative w-8 h-8 flex items-center justify-center rounded-full bg-white/5 border border-white/10 text-text-secondary hover:text-white transition-colors cursor-pointer">
                             <span
                                 class="absolute -top-1 -right-0.5 flex min-w-[16px] h-4 items-center justify-center rounded-full bg-red-500 px-1 text-[9px] font-bold text-white ring-2 ring-secondary-dark">
-                                {{ $unread_notification_messages->count() }}
+                                {{ $unread_notification_count }}
                             </span>
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                 viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
@@ -312,61 +312,7 @@
                         <!-- Mobile Notification Dropdown -->
                         <div
                             class="notification-dropdown hidden absolute right-0 top-full mt-2 w-72 bg-secondary-dark/95 backdrop-blur-xl border border-white/10 rounded-xl shadow-2xl overflow-hidden z-50 origin-top-right">
-                            <!-- List View -->
-                            <div class="notification-list-view">
-                                <div
-                                    class="px-4 py-3 border-b border-white/5 flex items-center justify-between bg-white/5">
-                                    <h3 class="text-sm font-bold text-white">{{ __('Notifications') }}</h3>
-                                    <span
-                                        class="text-xs text-text-secondary">{{ $unread_notification_messages->count() }}
-                                        {{ __('New') }}</span>
-                                </div>
-                                <div class="max-h-64 overflow-y-auto scrollbar-thin scrollbar-thumb-white/10">
-                                    @foreach ($unread_notification_messages as $notification)
-                                        <div class="notification-item-trigger cursor-pointer p-3 border-b border-white/5 hover:bg-white/5 transition-colors group"
-                                            data-id="{{ $notification->id }}">
-                                            <div class="flex flex-col gap-1">
-                                                <p
-                                                    class="text-xs font-bold text-white group-hover:text-accent-primary transition-colors flex items-start gap-2">
-                                                    <span
-                                                        class="w-1.5 h-1.5 rounded-full bg-accent-primary mt-1 shrink-0"></span>
-                                                    {{ __($notification->title) }}
-                                                </p>
-                                                <p class="text-[10px] text-text-secondary pl-3.5">
-                                                    {{ $notification->created_at->diffForHumans() }}</p>
-                                            </div>
-                                        </div>
-                                    @endforeach
-                                </div>
-                            </div>
-
-                            <!-- Detail Views -->
-                            @foreach ($unread_notification_messages as $notification)
-                                <div class="notification-detail-view hidden bg-secondary-dark/95"
-                                    data-id="{{ $notification->id }}">
-                                    <div class="px-4 py-3 border-b border-white/5 flex items-center gap-3 bg-white/5">
-                                        <button
-                                            class="notification-back-btn p-1 -ml-1 text-text-secondary hover:text-white transition-colors hover:bg-white/5 rounded-lg">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                                viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                                <path d="m15 18-6-6 6-6" />
-                                            </svg>
-                                        </button>
-                                        <h3 class="text-sm font-bold text-white truncate max-w-[200px]">
-                                            {{ __($notification->title) }}</h3>
-                                    </div>
-                                    <div class="p-4">
-                                        <p class="text-xs text-text-secondary leading-relaxed whitespace-pre-line">
-                                            {{ __($notification->body) }}</p>
-                                        <p
-                                            class="text-[10px] text-text-secondary/60 mt-4 pt-4 border-t border-white/5">
-                                            {{ __('Received') }}:
-                                            {{ $notification->created_at->format('M d, Y h:i A') }}
-                                        </p>
-                                    </div>
-                                </div>
-                            @endforeach
+                            @include('templates.bento.blades.partials.notification-dropdown')
                         </div>
                     </div>
                 @endif
@@ -531,13 +477,13 @@
                 </div>
 
                 <!-- Notifications -->
-                @if ($unread_notification_messages->count() > 0)
+                @if ($unread_notification_count > 0)
                     <div class="relative">
                         <button
                             class="notification-btn relative p-2 text-text-secondary hover:text-white transition-colors group">
                             <span
                                 class="absolute top-0 right-0 flex min-w-[16px] h-4 items-center justify-center rounded-full bg-red-500 px-1 text-[10px] font-bold text-white ring-2 ring-primary-dark transform translate-x-1/4 -translate-y-1/4">
-                                {{ $unread_notification_messages->count() }}
+                                {{ $unread_notification_count }}
                             </span>
                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
                                 viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
@@ -551,67 +497,7 @@
                         <!-- Desktop Notification Dropdown -->
                         <div
                             class="notification-dropdown hidden absolute right-0 top-full mt-2 w-80 bg-secondary-dark/95 backdrop-blur-xl border border-white/10 rounded-xl shadow-2xl overflow-hidden z-50 origin-top-right">
-                            <!-- List View -->
-                            <div class="notification-list-view">
-                                <div
-                                    class="px-5 py-3 border-b border-white/5 flex items-center justify-between bg-white/5">
-                                    <h3 class="text-sm font-bold text-white">{{ __('Notifications') }}</h3>
-                                    <span
-                                        class="text-xs text-text-secondary bg-white/5 px-2 py-0.5 rounded-full border border-white/5">{{ $unread_notification_messages->count() }}
-                                        {{ __('Total') }}</span>
-                                </div>
-                                <div class="max-h-80 overflow-y-auto scrollbar-thin scrollbar-thumb-white/10">
-                                    @foreach ($unread_notification_messages as $notification)
-                                        <div class="notification-item-trigger cursor-pointer px-5 py-4 border-b border-white/5 hover:bg-white/5 transition-colors group"
-                                            data-id="{{ $notification->id }}">
-                                            <div class="flex flex-col gap-1">
-                                                <p
-                                                    class="text-sm font-bold text-white group-hover:text-accent-primary transition-colors flex items-start gap-3">
-                                                    <span
-                                                        class="w-1.5 h-1.5 rounded-full bg-accent-primary mt-1.5 shrink-0 animate-pulse"></span>
-                                                    {{ __($notification->title) }}
-                                                </p>
-                                                <p class="text-[10px] font-mono text-text-secondary pl-4.5">
-                                                    {{ $notification->created_at->diffForHumans() }}</p>
-                                            </div>
-                                        </div>
-                                    @endforeach
-                                </div>
-                                <div class="p-2 bg-white/5 border-t border-white/5 text-center">
-                                    <span
-                                        class="text-[10px] text-text-secondary italic">{{ __('Click to see summary') }}</span>
-                                </div>
-                            </div>
-
-                            <!-- Detail Views -->
-                            @foreach ($unread_notification_messages as $notification)
-                                <div class="notification-detail-view hidden bg-secondary-dark/95 w-full h-80 flex flex-col"
-                                    data-id="{{ $notification->id }}">
-                                    <div
-                                        class="px-4 py-3 border-b border-white/5 flex items-center gap-3 bg-white/5 shrink-0">
-                                        <button
-                                            class="notification-back-btn p-1.5 -ml-1 text-text-secondary hover:text-white transition-colors hover:bg-white/5 rounded-lg border border-transparent hover:border-white/10">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                                viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                                <path d="m15 18-6-6 6-6" />
-                                            </svg>
-                                        </button>
-                                        <span
-                                            class="text-xs font-bold text-text-secondary uppercase tracking-wider">{{ __('Message Details') }}</span>
-                                    </div>
-                                    <div class="p-5 flex-1 overflow-y-auto">
-                                        <h3 class="text-base font-heading font-bold text-white mb-2">
-                                            {{ __($notification->title) }}</h3>
-                                        <p class="text-[11px] font-mono text-accent-primary mb-4">
-                                            {{ $notification->created_at->format('M d, Y h:i A') }}</p>
-                                        <div
-                                            class="p-3 rounded-xl bg-white/5 border border-white/5 text-sm text-text-secondary leading-relaxed">
-                                            {{ __($notification->body) }}
-                                        </div>
-                                    </div>
-                                </div>
-                            @endforeach
+                            @include('templates.bento.blades.partials.notification-dropdown')
                         </div>
                     </div>
                 @endif
@@ -901,96 +787,11 @@
         </script>
     @endif
 
+    @include('templates.bento.blades.partials.notification-script')
+
     {{-- clock --}}
     <script>
         $(document).ready(function() {
-            // Toggle Notification Dropdown
-            $('.notification-btn').click(function(e) {
-                e.stopPropagation();
-                var dropdown = $(this).siblings('.notification-dropdown');
-                var isAlreadyOpen = !dropdown.hasClass('hidden');
-
-                // Close all other dropdowns first
-                $('.notification-dropdown').addClass('hidden');
-                $('.notification-detail-view').addClass('hidden');
-                $('.notification-list-view').removeClass('hidden');
-
-                // If it wasn't open, open it now (if it was open, the code above just closed it, which is what we want)
-                if (!isAlreadyOpen) {
-                    dropdown.removeClass('hidden');
-                }
-            });
-
-            // Prevent closing when clicking inside content
-            $('.notification-dropdown').click(function(e) {
-                e.stopPropagation();
-            });
-
-            // Switch to Detail View & Mark as Read
-            $('.notification-item-trigger').click(function() {
-                var id = $(this).data('id');
-                var container = $(this).closest('.notification-dropdown');
-                var $this = $(this);
-
-                // Hide list, show detail
-                container.find('.notification-list-view').addClass('hidden');
-                container.find('.notification-detail-view[data-id="' + id + '"]').removeClass('hidden');
-
-                // Mark as read via AJAX if not already marked (optional check, but good for UI state)
-                if (!$this.hasClass('read-marked')) {
-                    $.ajax({
-                        url: "{{ route('user.notification-mark-as-read') }}",
-                        method: 'POST',
-                        data: {
-                            _token: "{{ csrf_token() }}",
-                            notification_id: id
-                        },
-                        success: function(response) {
-                            if (response.success) {
-                                $this.addClass('read-marked');
-                                // Optional: Decrement counter locally
-                                // Find closest counter
-                                var btn = container.siblings('.notification-btn');
-                                var badge = btn.find('span.bg-red-500');
-                                var count = parseInt(badge.text().trim());
-                                if (count > 0) {
-                                    count--;
-                                    badge.text(count);
-                                    // Update inner count
-                                    container.find('.text-xs.font-bold + span').text(count +
-                                        ' {{ __('New') }}');
-                                    // If 0, maybe hide badge?
-                                    if (count === 0) {
-                                        badge.addClass('hidden');
-                                        // Optional: Hide entire button if requirement was to hide bell on 0
-                                        // btn.parent().addClass('hidden'); 
-                                    }
-                                }
-                                // Remove 'New' visual indicator from list item
-                                $this.find('.rounded-full.bg-accent-primary').removeClass(
-                                    'bg-accent-primary').addClass('bg-transparent');
-                                // Darken Title
-                                $this.find('p.font-bold').removeClass('text-white').addClass(
-                                    'text-text-secondary');
-                            }
-                        }
-                    });
-                }
-            });
-
-            // Back to List View
-            $('.notification-back-btn').click(function() {
-                var container = $(this).closest('.notification-dropdown');
-
-                // Hide detail, show list
-                container.find('.notification-detail-view').addClass('hidden');
-                container.find('.notification-list-view').removeClass('hidden');
-            });
-
-            // Close everything on outside click
-            $(document).click(function() {
-                $('.notification-dropdown').addClass('hidden');
-            });
             // Mobile Menu Toggle
             const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
             const mobileSidebar = document.getElementById('mobile-sidebar');

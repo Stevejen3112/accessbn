@@ -120,7 +120,7 @@
                     preloader.style.transform = 'scale(1.05)';
                     setTimeout(() => {
                         preloader.style.display = 'none';
-                    }, 700);
+                    }, 150);
                 }
             }
 
@@ -143,12 +143,8 @@
             }
 
             // Initial Page Load
-            window.addEventListener('load', () => {
-                // Delay slightly to show off animation
-                setTimeout(() => {
-                    hidePreloader();
-                }, 800);
-            });
+            preloader.style.transitionDuration = '150ms';
+            hidePreloader();
 
             // Fallback safety
             setTimeout(() => {

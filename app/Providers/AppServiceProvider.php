@@ -38,9 +38,9 @@ class AppServiceProvider extends ServiceProvider
         // Sharing variables only to the user layouts
         View::composer('templates.*.blades.layouts.user', function ($view) {
             // share unread messages to the layout
-            $view->with('unread_notification_messages', Auth::check()
-                ? Auth::user()->notificationMessages()->where('status', 'unread')->latest()->get()
-                : collect());
+            $view->with('unread_notification_count', Auth::check()
+                ? Auth::user()->notificationMessages()->where('status', 'unread')->count()
+                : 0);
 
             // share user menu items to the user layout
             $view->with('user_menu_items', Cache::remember('user_menu_items', 60 * 60, function () {

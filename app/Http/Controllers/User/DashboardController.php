@@ -485,9 +485,37 @@ class DashboardController extends Controller
         ));
     }
 
+    public function notifications(Request $request)
+    {
+        $page = $request->user()->notificationMessages()->where('status', 'unread')
+            ->orderByDesc('id')->cursorPaginate(20, ['id', 'title', 'created_at']);
+
+        return response()->json([
+            'items' => collect($page->items())->map(fn ($notification) => [
+                'id' => $notification->id,
+                'title' => __($notification->title),
+                'created_at' => $notification->created_at->diffForHumans(),
+            ]),
+            'next_cursor' => $page->nextCursor()?->encode(),
+        ])->header('Cache-Control', 'private, no-store');
+    }
+
+    public function notification(Request $request, $id)
+    {
+        $notification = $request->user()->notificationMessages()->findOrFail($id);
+
+        return response()->json([
+            'id' => $notification->id,
+            'title' => __($notification->title),
+            'body' => __($notification->body),
+            'created_at' => $notification->created_at->format('M d, Y h:i A'),
+        ])->header('Cache-Control', 'private, no-store');
+    }
+
     public function notificationMarkAsRead(Request $request)
     {
-        $notification = NotificationMessage::findOrFail($request->notification_id);
+        $request->validate(['notification_id' => 'required|integer']);
+        $notification = $request->user()->notificationMessages()->findOrFail($request->notification_id);
         $notification->update(['status' => 'read']);
         return response()->json(['success' => true]);
     }
